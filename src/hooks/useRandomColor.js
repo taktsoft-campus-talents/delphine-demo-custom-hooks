@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import randomColor from "randomcolor";
 
-export function useRandomColor({ milliseconds = 1000 }) {
+export function useRandomColor({ milliseconds } = { milliseconds: 1000 }) {
   const [color, setColor] = useState(randomColor());
   useEffect(() => {
     const intervalId = setInterval(() => {

@@ -5,16 +5,22 @@ import Grid from "@mui/material/Grid2";
 import Checkbox from "@mui/material/Checkbox";
 import { useRandomColor } from "./hooks/useRandomColor";
 import { useState } from "react";
+import { ColorBox } from "./components/ColorBox";
+import { useFetch } from "./hooks/useFetch";
 
 function App() {
   const [changeInterval, setChangeInterval] = useState(1000);
-  const bgColor = useRandomColor({ milliseconds: changeInterval });
+  const { data, isLoading } = useFetch("https://randomuser.me/api/");
+  const user = data?.results[0];
 
   return (
-    <Container maxWidth="md" sx={{ backgroundColor: bgColor }}>
+    <Container maxWidth="md">
       <Typography variant="h1" gutterBottom align="center">
         MUI Demo
       </Typography>
+      {/* <ColorBox />
+      <ColorBox /> */}
+
       <Typography variant="h2" gutterBottom>
         {changeInterval}
       </Typography>
@@ -35,6 +41,15 @@ function App() {
       </Button>
       <Button variant="outlined">Outlined</Button>
       <Checkbox defaultChecked />
+      <Container>
+        {isLoading ? (
+          <Typography>Loading...</Typography>
+        ) : (
+          <Typography>
+            User: {user?.name.first} {user?.name.last}
+          </Typography>
+        )}
+      </Container>
 
       <Grid container spacing={2} sx={{ paddingTop: 4, paddingBottom: 4 }}>
         <Grid
