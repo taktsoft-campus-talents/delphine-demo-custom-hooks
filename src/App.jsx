@@ -3,18 +3,36 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid2";
 import Checkbox from "@mui/material/Checkbox";
+import { useRandomColor } from "./hooks/useRandomColor";
+import { useState } from "react";
 
 function App() {
+  const [changeInterval, setChangeInterval] = useState(1000);
+  const bgColor = useRandomColor({ milliseconds: changeInterval });
+
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" sx={{ backgroundColor: bgColor }}>
       <Typography variant="h1" gutterBottom align="center">
         MUI Demo
       </Typography>
       <Typography variant="h2" gutterBottom>
-        I am h2
+        {changeInterval}
       </Typography>
-      <Button color="secondary">Text</Button>
-      <Button>Contained</Button>
+      <Button
+        color="secondary"
+        onClick={() => {
+          setChangeInterval((prev) => prev - 1000);
+        }}
+      >
+        Decrease
+      </Button>
+      <Button
+        onClick={() => {
+          setChangeInterval((prev) => prev + 1000);
+        }}
+      >
+        Increase
+      </Button>
       <Button variant="outlined">Outlined</Button>
       <Checkbox defaultChecked />
 
